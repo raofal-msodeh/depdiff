@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "depdiff"
+version = "1.0.0"
+description = "Compare dependency lock files across git refs and classify every change with a license-risk verdict — zero install, offline."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+keywords = ["dependencies", "lockfile", "license-risk", "supply-chain"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Build Tools",
+    "Typing :: Typed",
+]
+
+[project.scripts]
+depdiff = "depdiff.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+ignore = ["UP007", "SIM102"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "PLC", "B018"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["depdiff"]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = false
